@@ -1,0 +1,14 @@
+#loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+#navTop{
+  color: white;
+}
+
+#navBottom{
+  text-indent : 2em; /*縮排*/
+  color: white;
+}

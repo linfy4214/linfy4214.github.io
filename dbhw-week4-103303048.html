@@ -1,0 +1,79 @@
+<html>
+  <head>
+  <!-- install jQuery by CDN(Content Delivery Network) from Google -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+  <!-- install bootstrap by CDN -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <!-- install fontawesome by CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- javascript 路徑設定 -->
+    <script src="./js/main.js"></script>
+  <!-- css 路徑設定 -->
+    <link rel="stylesheet" href="./css/main.css">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <a class="navbar-brand" href="http://data.taipei/opendata/datalist/datasetMeta?oid=ea732fb5-4bec-4be7-93f2-8ab91e74a6c6">
+
+
+        </a>
+        <h4>
+          <img id="pic" alt="Brand" src="http://pkl.gov.taipei/GIPDSD/xslGip/xslExport/106011/3/images/logo-1001220-8.png"> id="navTop" class="navbar-text">臺北市公園景點介紹</h4>
+
+
+    </nav>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>臺北市公園景點介紹</h1>
+
+    <i id="loading" class="fa fa-refresh fa-spin fa-5x"></i>
+
+    <div id="content" class="container"></div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <h5 id="navBottom">&copy; 會計二 103303048 林福洋</h5>
+    </nav>
+
+  </body>
+  <script>
+    $(document).ready(function() {
+      getData(function(err, data) {
+        if(err) {
+          console.log(err);
+        }
+        else {
+          var JSONparknameList = data.result.results;
+          var HTMLparknameList = JSONparknameList.map(function(parkname) {
+            var HTMLString = "<h2>"+"公園："+parkname.ParkName+"</h2>";
+            var attributes = "";
+            for (var key in parkname) {
+              if(key!="_id"){
+                attributes += "<li class='list-group-item'>" + key + "：" + parkname [key] + "</li>";
+              }
+            }
+            var HTMLString = HTMLString + attributes;
+            return HTMLString;
+          });
+          HTMLparknameList.forEach(function(html) {
+            $(html).appendTo("#content");
+          });
+          $('#loading').css('display','none');
+        }
+      });
+    });
+  </script>
+</html>
